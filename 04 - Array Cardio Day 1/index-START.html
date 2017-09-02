@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -32,28 +34,69 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    const filterList = inventors.filter(i => i.year >= 1500 && i.year < 1600);
+    console.log('Inventors born in the 1500 : ');
+    console.table(filterList);
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+
+    const mapList = inventors.map(i => i.first + ' ' + i.last);
+    console.log('Inventors names : ');
+    console.log(mapList);
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    const sortList = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
+    console.log('Inventors birthdates : ');
+    console.table(sortList);
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const yearsLived = inventors.reduce((t, i) => {
+      return t + (i.passed - i.year)
+    }, 0);
+    console.log("Inventors lived " + yearsLived + " years.");
+    console.log(yearsLived);
 
     // 5. Sort the inventors by years lived
+    const sortedByYearsLived = inventors.sort(
+      (a, b) => (a.passed - a.year) > (b.passed - b.year) ? 1 : -1);
+    console.log("Inventors by years lived: ");
+    console.table(sortedByYearsLived);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    /*  
+				const category = document.querySelector('.mw-category');
+        const links = [...category.querySelectorAll('a')];
+        const de = links
+          .map(link => link.text)
+          .filter(streetName => streetName.includes('de'));
+        console.log(de); 
+		*/
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const sortedByName = people.sort(
+      (a, b) => a.split(', ')[0] > b.split(', ')[0] ? 1 : -1);
+    console.log("People sorted by name : ")
+    console.log(sortedByName);
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
 
+    const reducedData = data.reduce((obj, count) => {
+      obj[count] ? obj[count]++ : obj[count] = 1;
+      return obj;
+    }, {});
+
+    console.log(reducedData);
   </script>
 </body>
+
 </html>
