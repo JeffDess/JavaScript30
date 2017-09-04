@@ -14,9 +14,46 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+	<script>
+		const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
-  </body>
+		const cities = [];
+		fetch(endpoint)
+			.then(res => res.json())
+			.then(data => cities.push(...data));
+
+		function findMatches(wordToMatch, cities) {
+			const regex = new RegExp(wordToMatch, 'gi');
+			return cities.filter(p => p.city.match(regex) || p.state.match(regex));
+		}
+
+		function numberWithCommas(number){
+			return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+
+		function displayMatches(){
+			const matches = findMatches(this.value, cities);
+			const html = matches.map(p => {
+				const regex = new RegExp(this.value, 'gi');
+				const city = p.city.replace(regex, `<span class="hl">${this.value}</span>`);
+				const state = p.state.replace(regex, `<span class="hl">${this.value}</span>`);
+				const population = numberWithCommas(p.population);
+
+				return `
+					<li>
+						<span class="name">${city}, ${state}</span>
+						<span class="population">${population}</span>
+					</li>
+				`;
+			}).join('');
+
+			suggestions.innerHTML = html;
+		}
+
+		const suggestions = document.querySelector('.suggestions');
+		const searchInput = document.querySelector('.search');
+		searchInput.addEventListener('change', displayMatches);
+		searchInput.addEventListener('keyup', displayMatches);
+	</script>
+</body>
 </html>
