@@ -6,7 +6,7 @@
 </head>
 <body>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+  <p onclick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
@@ -18,29 +18,61 @@
     }
 
     // Regular
+		console.log('hello');
 
     // Interpolated
+		const myVar = 'variable';
+		console.log('Hello I am a %s string', 'interpolated');
+		console.log(`Hello I am a ${myVar} string`);
 
     // Styled
+		console.log('%c I am some big text', 'font-size: 2em');
 
-    // warning!
+    // Warning!
+		console.warn('WARNING !!!')
 
     // Error :|
+		console.error('Fatal error :/ ')
 
     // Info
+		console.info('World Tapir Day is celebrated on 27 April each year. \nhttp://www.tapirday.org/')
 
     // Testing
+		const p = document.querySelector('p');
+		console.assert(p.classList.contains('ouch'), 'This is not the right element.')
 
-    // clearing
+    // Clearing
+		console.clear();
 
     // Viewing DOM Elements
+		console.dir(p);
 
     // Grouping together
+		dogs.forEach(d => {
+			console.groupCollapsed(`${d.name}`);
+			console.log(`This is ${d.name}`);
+			console.log(`${d.name} is ${d.age} years old.`);
+			console.log(`That makes ${d.age * 7} dog years old!`);
+			console.groupEnd(`${d.name}`);
+		});
 
-    // counting
+    // Counting
+		console.count('lol');
+		console.count('lol');
+		console.count('lol');
+		console.count('lol');
 
-    // timing
+    // Timing
+		console.time('fetching data');
+		fetch('https://api.github.com/users/jeffdess')
+			.then(data => data.json())
+			.then(data => {
+				console.timeEnd('fetching data');
+				console.log(data);
+			});
 
+		// Data table
+		console.table(dogs);
   </script>
 </body>
 </html>
